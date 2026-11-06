@@ -76,9 +76,6 @@ PCB designed in KiCad 10.0
 
 <img width="559" height="381" alt="image" src="https://github.com/user-attachments/assets/074c4e8e-3d16-4a63-aee0-e572b2a34240" />
 
-
-<img width="915" height="544" alt="image" src="https://github.com/user-attachments/assets/f3166503-4372-4b39-8bc8-c83a0b612fbe" />
-
 ## How to open in KiCad
 Install KiCad
-Open hardware/kicad/WeatherGirl.kicad_pro
+Open hardware/kicad/ProjektNaElektronike.kicad_pro
