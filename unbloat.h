@@ -16,10 +16,10 @@ const byte PIN_SBL = A2;
 const byte PIN_SBR = 6;
 
 // Centrowanie
-const byte CENTER_STL = 90;
-const byte CENTER_STR = 90;
-const byte CENTER_SBL = 90;
-const byte CENTER_SBR = 90;
+const byte CENTER_STL = 110;
+const byte CENTER_STR = 110;
+const byte CENTER_SBL = 70;
+const byte CENTER_SBR = 70;
 
 // Basic UART
 const byte rxPin = 2;
@@ -32,9 +32,9 @@ const byte MAX_A = 160;
 
 // Do tylu
 const byte DIR_STL = +1;
-const byte DIR_STR = -1;
+const byte DIR_STR = +1;
 const byte DIR_SBL = +1;
-const byte DIR_SBR = -1;
+const byte DIR_SBR = +1;
 
 // Buzzer
 const byte PIN_BUZZER = 8;
