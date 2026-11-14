@@ -1,9 +1,12 @@
-# WeatherGirl
+# Robot
 **Complete dog-like robot** built on clean **ATmega328P**.
 
 **Project includes:**
 - code wrote with **arduino framework** in **ArduinoIDE**
 - projects pcb in **KiCad**
+
+## Video
+https://youtube.com/shorts/nso789CsX9U
 
 ## Used components
 `| Microcontroler | ATmega328P`
@@ -43,6 +46,8 @@
 
 ### Step 1: clone repo
 ```bash
+
+
 git clone https://github.com/darlingramus/Robocik.git
 cd Robocik
 ```
@@ -70,11 +75,13 @@ PCB designed in KiCad 10.0
 
 ## Front PCB
 
-<img width="560" height="382" alt="image" src="https://github.com/user-attachments/assets/4a23ca75-055c-4cc5-aebb-794d470adc07" />
+<img width="1536" height="2048" alt="c45ad85c-8333-4e9d-967d-a3e53d081956 (1)" src="https://github.com/user-attachments/assets/67d69a16-2b87-4e74-a672-20e2c2f57fa2" />
+
 
 ## Back PCB
 
-<img width="559" height="381" alt="image" src="https://github.com/user-attachments/assets/074c4e8e-3d16-4a63-aee0-e572b2a34240" />
+<img width="1536" height="2048" alt="7141d11f-a660-4029-a978-41caf6e4aabc (1)" src="https://github.com/user-attachments/assets/7efbff41-8dd4-4c7e-ae20-fe873e76175b" />
+
 
 ## How to open in KiCad
 Install KiCad
