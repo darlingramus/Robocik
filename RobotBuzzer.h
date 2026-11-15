@@ -2,8 +2,6 @@
 
 #include "unbloat.h"
 
-extern volatile bool stopFlag;
-
 #define NOTE_AS4 466
 #define NOTE_B4  494
 #define NOTE_C5  523
@@ -55,41 +53,14 @@ const int melody[] PROGMEM = {
 
 const int melodyLen = sizeof(melody) / sizeof(melody[0]) / 2;
 
-// Czas jednej fazy kroku (ms) - tyle samo co delay() w stepForward()
-const unsigned long GAIT_PHASE_MS = 150;
-
-// Stan chodu - nieblokujący, sterowany przez millis()
-static unsigned long gaitLast = 0;
-static bool gaitStepOut = false;
-
-static void gaitStart() {
-  gaitStepOut = true;
-  gaitLast = millis();
-  // pierwsza faza kroku do przodu (jak w stepForward)
-  setAll(CENTER_STL + STEP, CENTER_STR + STEP,
-         CENTER_SBL - STEP, CENTER_SBR - STEP);
-}
-
-static void gaitUpdate() {
-  if (millis() - gaitLast >= GAIT_PHASE_MS) {
-    gaitLast += GAIT_PHASE_MS;
-    gaitStepOut = !gaitStepOut;
-    if (gaitStepOut) {
-      setAll(CENTER_STL + STEP, CENTER_STR + STEP,
-             CENTER_SBL - STEP, CENTER_SBR - STEP);
-    } else {
-      centerAll();
-    }
-  }
-}
-
 void ImperialMarch() {
-  gaitStart();
+  if (!ensureStanding()) return;
+  gaitBegin(+1, +1, true);   // ten sam chod co 'W', tylko w petli i nieblokujacy
 
   for (int i = 0; i < melodyLen; i++) {
-    if (stopFlag) {
+    if (shouldStop()) {
       noTone(PIN_BUZZER);
-      centerAll();
+      gaitStop();
       return;
     }
 
@@ -103,11 +74,11 @@ void ImperialMarch() {
     }
 
     unsigned long noteEnd = millis() + (unsigned long)(dur * 1.3);
-    
+
     while ((long)(millis() - noteEnd) < 0) {
-      if (stopFlag) {
+      if (shouldStop()) {
         noTone(PIN_BUZZER);
-        centerAll();
+        gaitStop();
         return;
       }
       gaitUpdate();
@@ -116,7 +87,7 @@ void ImperialMarch() {
     noTone(PIN_BUZZER);
   }
 
-  centerAll();
+  gaitStop();
 }
 
 void WallE_Hello() {
