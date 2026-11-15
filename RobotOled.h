@@ -17,3 +17,4 @@ void showFace(const char* text, uint8_t sx, uint8_t sy);
 void faceHappy();
 void faceChill();
 void faceSleep();
+void err();

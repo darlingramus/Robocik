@@ -5,6 +5,7 @@
 #include <Arduino.h>
 
 extern Servo FrontLeft, FrontRight, BackLeft, BackRight;
+extern volatile bool stopFlag;
 
 // Dzielnik napiecia
 const byte PIN_VBAT = A3;

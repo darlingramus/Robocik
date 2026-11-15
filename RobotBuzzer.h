@@ -2,6 +2,8 @@
 
 #include "unbloat.h"
 
+extern volatile bool stopFlag;
+
 #define NOTE_AS4 466
 #define NOTE_B4  494
 #define NOTE_C5  523
@@ -18,6 +20,15 @@
 #define NOTE_A5  880
 #define NOTE_F4  349
 #define NOTE_REST 0
+#define NOTE_C4  262
+#define NOTE_CS4 277
+#define NOTE_D4  294
+#define NOTE_DS4 311
+#define NOTE_E4  330
+#define NOTE_FS4 370
+#define NOTE_GS4 415
+#define NOTE_C6  1047
+#define NOTE_CS6 1109
 
 const int melody[] PROGMEM = {
   NOTE_A4, 500, NOTE_A4, 500, NOTE_A4, 500,
@@ -76,6 +87,12 @@ void ImperialMarch() {
   gaitStart();
 
   for (int i = 0; i < melodyLen; i++) {
+    if (stopFlag) {
+      noTone(PIN_BUZZER);
+      centerAll();
+      return;
+    }
+
     int note = pgm_read_word(&melody[i * 2]);
     int dur  = pgm_read_word(&melody[i * 2 + 1]);
 
@@ -86,7 +103,13 @@ void ImperialMarch() {
     }
 
     unsigned long noteEnd = millis() + (unsigned long)(dur * 1.3);
+    
     while ((long)(millis() - noteEnd) < 0) {
+      if (stopFlag) {
+        noTone(PIN_BUZZER);
+        centerAll();
+        return;
+      }
       gaitUpdate();
     }
 
@@ -94,4 +117,16 @@ void ImperialMarch() {
   }
 
   centerAll();
+}
+
+void WallE_Hello() {
+  tone(PIN_BUZZER, 262, 250);
+  delay(300);
+  tone(PIN_BUZZER, 330, 250);
+  delay(300);
+  tone(PIN_BUZZER, 392, 250);
+  delay(300);
+  tone(PIN_BUZZER, 523, 500);
+  delay(550);
+  noTone(PIN_BUZZER);
 }

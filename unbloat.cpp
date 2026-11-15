@@ -45,17 +45,21 @@ static void pairPose(bool pairA, int off){
 }
 
 static void crawlHalf(bool pairA, int dir){
+  if (stopFlag) return;
+
   int reach = dir * FWD * REACH;
 
   pairPose(pairA, reach);    
   delay(FAST_MS);
 
   for (int i = 1; i <= SLOW_STEPS; i++) {  
+    if (stopFlag) return;
     int off = reach - (2 * reach * i) / SLOW_STEPS;
     pairPose(pairA, off);
     delay(SLOW_MS);
   }
 
+  if (stopFlag) return;
   pairPose(pairA, 0);                
   delay(FAST_MS);
 }

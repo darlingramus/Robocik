@@ -28,39 +28,12 @@ if (!display.begin(0x3C, true)) {
 
   pinMode(PIN_BUZZER, OUTPUT);
   digitalWrite(PIN_BUZZER, LOW);
-
   pinMode(PIN_BUTTON, INPUT);
+
+  WallE_Hello();
 }
 
-void DDDDD(){
-
-  FrontLeft.write(60);   // Lift leg
-  FrontRight.write(90);  // Down
-  BackLeft.write(90);    // Down
-  BackRight.write(60);   // Lift leg
-  delay(500);            // Hold position
-
-  // Step 2: Return to neutral (all legs down)
-  FrontLeft.write(90);
-  FrontRight.write(90);
-  BackLeft.write(90);
-  BackRight.write(90);
-  delay(200);            // Brief pause
-
-  // Step 3: Lift front-right and back-left, lower others
-  FrontLeft.write(90);   // Down
-  FrontRight.write(60);  // Lift leg
-  BackLeft.write(60);    // Lift leg
-  BackRight.write(90);   // Down
-  delay(500);            // Hold position
-
-  // Step 4: Return to neutral (all legs down)
-  FrontLeft.write(90);
-  FrontRight.write(90);
-  BackLeft.write(90);
-  BackRight.write(90);
-  delay(200);     
-}
+volatile bool stopFlag = false; 
 
 void loop() {
 
@@ -73,11 +46,24 @@ if (lastButton == LOW && button == HIGH) {
     faceHappy();
     centerAll();
 }
-
 lastButton = button;
+
+// if(readBatteryVoltage() <= 6.0){
+//   err();
+// }
 
  if (Serial.available() > 0) {     
       char data = Serial.read(); 
+
+      if (data == 'Y') {
+      stopFlag = true;
+      noTone(PIN_BUZZER);
+      centerAll();
+      faceHappy();
+      return;
+      }
+      stopFlag = false;
+
       switch(data) {
         case 'W': stepForward();  break;
         case 'S': stepBackward(); break;

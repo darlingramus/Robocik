@@ -21,3 +21,4 @@ void showFace(const char* text, uint8_t size, int16_t x_offset) {
 void faceHappy() { showFace(">u<", 7, 2); }
 void faceChill() { showFace(">--<", 5, 4); }
 void faceSleep() { showFace("-_-", 7, 2); }
+void err() { showFace("err", 7, 2); }
