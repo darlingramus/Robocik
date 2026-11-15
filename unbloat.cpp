@@ -1,7 +1,7 @@
 #include "unbloat.h"
 
 
-Servo STL, STR, SBL, SBR;
+Servo FrontLeft, FrontRight, BackLeft, BackRight;
 
 int clampAngle(int a) {
   if (a < MIN_A) return MIN_A;
@@ -11,17 +11,17 @@ int clampAngle(int a) {
 
 // Ustawia pozycje z uwzględnieniem kierunku montażu
 void setAll(byte stl, byte str, byte sbl, byte sbr) {
-  STL.write(clampAngle(CENTER_STL + DIR_STL * (stl - CENTER_STL)));
-  STR.write(clampAngle(CENTER_STR + DIR_STR * (str - CENTER_STR)));
-  SBL.write(clampAngle(CENTER_SBL + DIR_SBL * (sbl - CENTER_SBL)));
-  SBR.write(clampAngle(CENTER_SBR + DIR_SBR * (sbr - CENTER_SBR)));
+  FrontLeft.write(clampAngle(CENTER_STL + DIR_STL * (stl - CENTER_STL)));
+  FrontRight.write(clampAngle(CENTER_STR + DIR_STR * (str - CENTER_STR)));
+  BackLeft.write(clampAngle(CENTER_SBL + DIR_SBL * (sbl - CENTER_SBL)));
+  BackRight.write(clampAngle(CENTER_SBR + DIR_SBR * (sbr - CENTER_SBR)));
 }
 
 void centerAll(){
-  STL.write(CENTER_STL);
-  STR.write(CENTER_STR);
-  SBL.write(CENTER_SBL);
-  SBR.write(CENTER_SBR);
+  FrontLeft.write(CENTER_STL);
+  FrontRight.write(CENTER_STR);
+  BackLeft.write(CENTER_SBL);
+  BackRight.write(CENTER_SBR);
 }
 
 //dzieki deepseekowi udalo sie zrobic tak by sie ruszał 
