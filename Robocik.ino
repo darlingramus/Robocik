@@ -4,82 +4,69 @@
 
 Adafruit_SH1106G display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
+
 void setup() {
   Serial.begin(9600);
   Wire.begin();
   analogReference(INTERNAL);
 
-  if (!display.begin(0x3C, true)) {
+if (!display.begin(0x3C, true)) {
     Serial.println(F("OLED fail"));
   } else {
-    faceHappy();
+    blink();
   }
 
   FrontLeft.attach(PIN_STL);
   FrontRight.attach(PIN_STR);
   BackLeft.attach(PIN_SBL);
   BackRight.attach(PIN_SBR);
-  centerAll();                // na starcie lezy (nogi poziomo)
+
+  FrontLeft.write(CENTER_STL);
+  FrontRight.write(CENTER_STR);
+  BackLeft.write(CENTER_SBL);
+  BackRight.write(CENTER_SBR);
 
   pinMode(PIN_BUZZER, OUTPUT);
   digitalWrite(PIN_BUZZER, LOW);
   pinMode(PIN_BUTTON, INPUT);
 
   WallE_Hello();
-  standUp();                  // wstaje po powitaniu
+  neutral(); 
 }
 
 void loop() {
-  static bool lastButton = LOW;
+
+static bool lastButton = LOW;
   bool button = digitalRead(PIN_BUTTON);
 
-  if (lastButton == LOW && button == HIGH) {
-    faceChill();
+if (lastButton == LOW && button == HIGH) {
     chill();
-    faceHappy();
-    standUp();
-  }
-  lastButton = button;
-
-  // if(readBatteryVoltage() <= 6.0){
-  //   err();
-  //   tone(PIN_BUZZER, 200, 500);
-  // }
-
-  if (stopFlag) {             // 'Y' zlapane w trakcie ruchu przez pollSerial()
-    stopFlag = false;
-    noTone(PIN_BUZZER);
-    holdPose();
-    faceHappy();
-  }
-
-  char data = takePending();  // komenda odebrana w trakcie poprzedniego ruchu
-  if (data == 0 && Serial.available() > 0) {
-    data = Serial.read();
-  }
-
-  if (data != 0) {
-    if (data == 'Y') {
-      noTone(PIN_BUZZER);
-      holdPose();
-      faceHappy();
-    }
-
-    stopFlag = false;
-
-    switch (data) {
-      case 'W': stepForward();  break;
-      case 'S': stepBackward(); break;
-      case 'A': turnLeft();     break;
-      case 'D': turnRight();    break;
-      case 'B': ImperialMarch(); break;
-      case 'C': faceSleep(); sleep(); faceHappy(); break;
-      case 'X': wiggle();       break;
-      case 'Z': standUp();      break;
-      case 'N': centerAll();    break;
-      default:  break;
-    }
-  }
-
-  delay(10);
+    for(int i = 0; i<2; i++){
+      blink();
+      delay(700);
+      }
+    centerAll();
 }
+lastButton = button;
+
+if(readBatteryVoltage() <= 6.0){
+  err();
+}
+
+ if (Serial.available() > 0) {     
+      char data = Serial.read(); 
+      switch(data) {
+        case 'W': for(int i = 0; i < 15; i++) {walk();} break;
+        case 'M': ImperialMarch();    break;
+        case 'C': faceSleep(); sleep(); lullabyStar(); delay(3000); blink(); centerAll(); break;
+        case 'Z': FrontLeft.write(90); FrontRight.write(90); BackLeft.write(90); BackRight.write(90); break;
+        case 'T': blink(); delay(200); for(int i = 0; i<2; i++) MegalovaniaDance(); break;
+      default: break;
+      }
+   }
+   delay(50);
+}
+
+
+
+

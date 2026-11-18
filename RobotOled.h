@@ -13,8 +13,9 @@ extern Adafruit_SH1106G display;
 
 extern float readBatteryVoltage();
 
-void showFace(const char* text, uint8_t size, int16_t x_offset);
+void showFace(const char* text, uint8_t sx, uint8_t sy);
 void faceHappy();
 void faceChill();
 void faceSleep();
 void err();
+void blink();
